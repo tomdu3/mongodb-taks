@@ -27,32 +27,66 @@ db.users.insertMany([
       _id: ObjectId("1"),
       name: "Tom D",
       email: "tomd@main.com",
-      codekataId: ObjectId("1"), // Reference to codekata progress
-      mentorId: ObjectId("101"), // Reference to mentor
-      attendance: [
-        { date: ISODate("2025-03-01"), status: "present" },
-        { date: ISODate("2025-03-02"), status: "absent" }
-      ],
-      tasks: [
-        { taskId: ObjectId("201"), status: "submitted", submittedAt: ISODate("2025-03-01") }
-      ]
     },
     {
         _id: ObjectId("2"), 
         name: "Igor D",
         email: "igord@email.com",
-        codekataId: ObjectId("2"), // Reference to codekata progress
-        mentorId: ObjectId("101"), // Reference to mentor
-        attendance: [
-          { date: ISODate("2025-03-01"), status: "absent" }, // Correct dates
-          { date: ISODate("2025-03-02"), status: "present" }
-        ],
-        tasks: [
-          {
-            taskId: ObjectId("202"), 
-            status: "not submitted" // Updated task status
-          }
-        ]
       }
+  ]);
+  
+// add code cata
+
+db.mentors.insertMany([
+  {
+    _id: ObjectId("101"),
+    name: "Mentor A",
+    mentees: [ObjectId("1"), ObjectId("2")] // Matches Tom and Igor
+  },
+  {
+    _id: ObjectId("102"),
+    name: "Mentor B",
+    mentees: [] // No mentees for this mentor yet
+  }
+]);
+
+// add codekata
+db.codekata.insertMany([
+    {
+      _id: ObjectId("1"), // Codekata record for Tom
+      userId: ObjectId("1"),
+      problems: [
+        { problemId: 101, solvedAt: ISODate("2025-03-01") },
+        { problemId: 102, solvedAt: ISODate("2025-03-02") }
+      ]
+    },
+    {
+      _id: ObjectId("2"), // Codekata record for Igor
+      userId: ObjectId("2"),
+      problems: [
+        { problemId: 103, solvedAt: ISODate("2025-03-01") },
+        { problemId: 104, solvedAt: ISODate("2025-03-03") }
+      ]
+    }
+  ]);
+  
+// add attendance
+db.attendance.insertMany([
+    {
+      _id: ObjectId("1"), // Attendance record for Tom
+      userId: ObjectId("1"),
+      records: [
+        { date: ISODate("2025-03-01"), status: "present" },
+        { date: ISODate("2025-03-02"), status: "absent" }
+      ]
+    },
+    {
+      _id: ObjectId("2"), // Attendance record for Igor
+      userId: ObjectId("2"),
+      records: [
+        { date: ISODate("2025-03-01"), status: "absent" },
+        { date: ISODate("2025-03-02"), status: "present" }
+      ]
+    }
   ]);
   
